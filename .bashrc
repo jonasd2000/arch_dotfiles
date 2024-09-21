@@ -9,4 +9,7 @@ alias ls='ls --color=auto'
 alias ll='ls -la --color=auto'
 alias grep='grep --color=auto'
 alias py="python3"
+
+alias gitg='git log --graph --oneline --color --all'
+
 PS1='[\u@\h \W]\$ '
