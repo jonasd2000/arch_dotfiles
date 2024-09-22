@@ -7,6 +7,21 @@
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
+    "hyprland/workspaces": { 
+        "format": "{windows}",
+        // "format": "<sub>{icon}</sub>\n{windows}",
+        "format-window-separator": "\n",
+        "window-rewrite-default": "",
+        "window-rewrite": {
+            "class<.*tty.*>": "",
+            "class<.*tty.*> title<.*\\.py.*>": "",
+            "title<.*youtube.*>": "", // Windows whose titles contain "youtube"
+            "class<firefox>": "", // Windows whose classes are "firefox"
+            "class<firefox> title<.*github.*>": "", // Windows whose class is "firefox" and title contains "github". Note that "class" always comes first.
+            "class<spotify>": "",    
+            "class<discord>": "",
+        }
+    },
     "network": {
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-ethernet": "{ifname} ",
