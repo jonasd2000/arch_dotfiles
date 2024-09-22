@@ -10,16 +10,19 @@
     "hyprland/workspaces": { 
         "format": "{windows}",
         // "format": "<sub>{icon}</sub>\n{windows}",
-        "format-window-separator": "\n",
-        "window-rewrite-default": "",
+        // "format-window-separator": "\n",
+        "window-rewrite-default": "?",
         "window-rewrite": {
             "class<.*tty.*>": "",
-            "class<.*tty.*> title<.*\\.py.*>": "",
+            "title<.*\\.py.*>": "",
             "title<.*youtube.*>": "", // Windows whose titles contain "youtube"
             "class<firefox>": "", // Windows whose classes are "firefox"
             "class<firefox> title<.*github.*>": "", // Windows whose class is "firefox" and title contains "github". Note that "class" always comes first.
             "class<spotify>": "",    
             "class<discord>": "",
+            "class<steam>": "",
+            "class<obsidian>": "\uE008",
+            "class<zotero>": "\uE009",
         }
     },
     "network": {
