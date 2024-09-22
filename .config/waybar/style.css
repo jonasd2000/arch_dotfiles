@@ -38,6 +38,9 @@ window#waybar {
 #workspaces button.active {
 	background-color: rgba(0,43,51,0.85);
 }
+#workspaces button.urgent {
+    background-color: rgba(255,104,51,0.85);
+}
 
 #clock,
 #battery,
