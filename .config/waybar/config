@@ -13,7 +13,7 @@
         // "format-window-separator": "\n",
         "window-rewrite-default": "?",
         "window-rewrite": {
-            "class<.*tty.*>": "",
+            "class<kitty>": "",
             "title<.*\\.py.*>": "",
             "title<.*youtube.*>": "", // Windows whose titles contain "youtube"
             "class<firefox>": "", // Windows whose classes are "firefox"
