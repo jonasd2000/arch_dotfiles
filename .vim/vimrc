@@ -12,6 +12,8 @@ Plug 'mattn/vim-lsp-settings'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
+" status bar
+Plug 'vim-airline/vim-airline'
 call plug#end()
 
 " ## GENERAL
