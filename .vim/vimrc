@@ -1,3 +1,19 @@
+" ## PLUGINS
+call plug#begin()
+
+" List your plugins here
+" colorschemes
+Plug 'jacoborus/tender.vim'
+
+" language server
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+" autocomplete
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+call plug#end()
+
 " ## GENERAL
 set number
 set showmatch
@@ -27,19 +43,11 @@ inoremap ` ``<Esc>ha
 
 " syntax highlighting
 syntax enable
+colorscheme tender
+hi Normal guibg=NONE ctermbg=NONE
 
 " search
 set hlsearch
-
-call plug#begin()
-
-" List your plugins here
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'mattn/vim-lsp-settings'
-
-call plug#end()
 
 " vim lsp
 if executable('pylsp')
