@@ -8,9 +8,10 @@ bold_italic_font    auto
 # scrollback
 touch_scroll_multiplier 5.0
 
-map super+e remote_control send-text yazi\\r
+include ./themes/Grape.conf
+
 
 # BEGIN_KITTY_THEME
-# Pnevma
+# Grape
 include current-theme.conf
 # END_KITTY_THEME
