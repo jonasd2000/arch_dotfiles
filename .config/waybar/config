@@ -14,13 +14,30 @@
         "window-rewrite-default": "?",
         "window-rewrite": {
             "class<kitty>": "",
+            // programming
             "title<.*\\.py.*>": "",
+            "title<.*\\.rs.*>": "",
+            "title<.*\\.go.*>": "",
+            "title<.*\\.html.*>": "",
+            "title<.*\\.css.*>": "",
+
+            // internet
             "title<.*youtube.*>": "", // Windows whose titles contain "youtube"
+            "title<.*google.*>": "",
             "class<firefox>": "", // Windows whose classes are "firefox"
+            "class<firefox> title<.*r\\/.*>": "",
             "class<firefox> title<.*github.*>": "", // Windows whose class is "firefox" and title contains "github". Note that "class" always comes first.
+            "class<firefox> title<.*yahoo.*>": "",
+            "class<firefox> title<.*soundcloud.*>": "",
+            "class<firefox> title<.*twitch.*>": "",
+            "class<firefox> title<.*amazon.*>": "",
+
+            // local programs
             "class<spotify>": "",    
             "class<discord>": "",
             "class<steam>": "",
+            
+            // custom
             "class<obsidian>": "\uE008",
             "class<zotero>": "\uE009",
         }
