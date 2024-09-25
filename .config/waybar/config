@@ -36,7 +36,8 @@
             "class<spotify>": "",    
             "class<discord>": "",
             "class<steam>": "",
-            
+            "class<.*keepassxc.*>": "",
+
             // custom
             "class<obsidian>": "\uE008",
             "class<zotero>": "\uE009",
