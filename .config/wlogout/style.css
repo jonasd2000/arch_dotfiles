@@ -1,6 +1,9 @@
 * {
 	background-image: none;
 	box-shadow: none;
+    font-family: Font Awesome, Noto Sans, Roboto, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 window {
