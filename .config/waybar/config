@@ -1,16 +1,10 @@
 {
-    "modules-left": ["hyprland/workspaces", "sway/mode"],
-    "modules-center": ["clock", "idle_inhibitor"],
-    /* "modules-right": ["tray", "custom/scratchpad-indicator", "pulseaudio", "custom/power"], */
-    "modules-right": ["tray", "network", "custom/scratchpad-indicator", "pulseaudio", "custom/power"],
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray", "network", "pulseaudio", "custom/power"],
 
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
-    },
     "hyprland/workspaces": { 
         "format": "{windows}",
-        // "format": "<sub>{icon}</sub>\n{windows}",
-        // "format-window-separator": "\n",
         "window-rewrite-default": "?",
         "window-rewrite": {
             "class<kitty>": "",
@@ -50,22 +44,13 @@
         "max-length": 50,
         "on-click": "kitty -e 'nmtui'"
     },
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "",
-            "deactivated": ""
-        },
-		"on-click": "bash /home/dg/.local/bin/toggleRemote"
-    },
     "tray": {
         "icon-size": 15,
         "spacing": 10
     },
     "clock": {
-        // "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}",
-		"on-click": "gnome-calendar",
     },
     "pulseaudio": {
         "format": "{volume}% {icon} ",
@@ -89,13 +74,4 @@
 		"format": " ",
 		"on-click": "wlogout"
 	},
-    "custom/scratchpad-indicator": {
-        "format-text": "{}hi",
-        "return-type": "json",
-        "interval": 3,
-        "exec": "~/.local/bin/scratchpad-indicator 2> /dev/null",
-        "exec-if": "exit 0",
-        "on-click": "swaymsg 'scratchpad show'",
-        "on-click-right": "swaymsg 'move scratchpad'"
-    }
 }
