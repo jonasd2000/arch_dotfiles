@@ -1,3 +1,5 @@
+@import "../colors/colors-gtk3.css";
+
 * {
 	background-image: none;
 	box-shadow: none;
@@ -7,14 +9,14 @@
 }
 
 window {
-	background-color: rgba(12, 12, 12, 0.4);
+	background-color: alpha(@background, 0.4);
 }
 
 button {
 /*    margin: 5px; */
     border-radius: 20px;
 	/* text-decoration-color: #FFFFFF; */
-    color: rgba(89, 89, 89, 0.67);
+    color: @foreground;
 	border-width: 0px;
     background-color: transparent;
 	background-repeat: no-repeat;
@@ -23,8 +25,9 @@ button {
 }
 
 button:focus, button:active, button:hover {
-	background-color: #3700B3;
+	background-color: alpha(@highlight, 0.5);
 	outline-style: none;
+    color: @accent;
 }
 
 #lock {
