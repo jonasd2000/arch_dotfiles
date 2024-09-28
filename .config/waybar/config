@@ -67,22 +67,13 @@
         "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
     },
     "pulseaudio": {
-        "format": "{volume}% {icon}",
-        "format-muted": "0% {icon}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
+        "format": "{icon}",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
             "default": ["", "", ""]
         },
         "tooltip": true,
+        "tooltip-format": "{desc} {volume}%",
         "reverse-scrolling": true,
-        "on-click": "pavucontrol"
     },
     "battery": {
         "interval": 60,
