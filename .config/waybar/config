@@ -40,8 +40,8 @@
     "network": {
         "format-wifi": "{icon}",
         "format-icons": {
-            "wifi": ["\uF6aa", "\uF6ab", "\uF1eb"],
-            "disconnected": ["\ue2cf"]
+            "wifi": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+            "disconnected": ["󰤮"]
         },
         "format-ethernet": "{ifname} ",
         "format-disconnected": "", 
@@ -59,7 +59,7 @@
     "bluetooth": {
         "format-disabled": "", // an empty format will hide the module
         "format": "",
-        "format-connected": "<sub>{num_connections}</sub>",
+        "format-connected": "󰂱<sub>{num_connections}</sub>",
         // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
         "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
