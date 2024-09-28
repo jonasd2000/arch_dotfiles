@@ -35,7 +35,7 @@ window#waybar {
     color: @highlight;
 }
 #workspaces button:hover {
-    background: @accent;
+    background: @highlight;
     color: @lowlight;
 }
 #workspaces button.active {
