@@ -1,0 +1,5 @@
+@define-color background    rgb( 28,  28,  28); /* eerie black */
+@define-color foreground    rgb(208, 208, 208); /* timberwolf */
+@define-color lowlight      rgb( 13,  56,  65); /* midnight green*/
+@define-color accent        rgb(227, 203, 133); /* flax */
+@define-color highlight     rgb( 36, 149, 171); /* blue (munsell) */
