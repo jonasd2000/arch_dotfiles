@@ -1,7 +1,7 @@
 {
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock"],
-    "modules-right": ["tray", "network", "pulseaudio", "custom/power"],
+    "modules-right": ["tray", "pulseaudio", "network", "battery", "custom/power"],
 
     "hyprland/workspaces": { 
         "format": "{windows}",
@@ -69,6 +69,17 @@
         "tooltip": true,
         "reverse-scrolling": true,
         "on-click": "pavucontrol"
+    },
+    "battery": {
+        "interval": 60,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-icons": ["", "", "", "", ""],
+        "format-charging": "{capacity}% \\u+f376",
+        "max-length": 25
     },
 	"custom/power": {
 		"format": " ",
