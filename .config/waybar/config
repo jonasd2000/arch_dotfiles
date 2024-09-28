@@ -1,6 +1,6 @@
 {
     "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["clock"],
+    "modules-center": ["clock", "custom/nowplaying"],
     "modules-right": ["tray", "bluetooth", "pulseaudio", "network", "battery", "custom/power"],
 
     "hyprland/workspaces": { 
@@ -55,6 +55,11 @@
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%d/%m/%Y}",
+    },
+    "custom/nowplaying": {
+        "exec": "~/.config/waybar/scripts/now_playing.sh",
+        "interval": 2,
+        "format": "{} ",
     },
     "bluetooth": {
         "format-disabled": "", // an empty format will hide the module
