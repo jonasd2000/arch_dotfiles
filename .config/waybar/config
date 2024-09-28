@@ -85,10 +85,10 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% {icon}",
+        "format": "{icon}",
         "format-icons": ["", "", "", "", ""],
-        "format-charging": "{capacity}% \\u+f376",
-        "max-length": 25
+        "max-length": 25,
+        "tooltip-format": "{capacity}%\n{timeTo}"
     },
 	"custom/power": {
 		"format": " ",
