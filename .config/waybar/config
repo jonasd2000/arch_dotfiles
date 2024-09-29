@@ -9,9 +9,9 @@
         "window-rewrite": {
             "class<kitty>": "",
             // programming
-            "title<.*\\.py.*>": "",
-            "title<.*\\.rs.*>": "",
-            "title<.*\\.go.*>": "",
+            "title<.*\\.py.*>": "",
+            "title<.*\\.rs.*>": "",
+            "title<.*\\.go.*>": "󰟓",
             "title<.*\\.html.*>": "",
             "title<.*\\.css.*>": "",
 
@@ -28,8 +28,8 @@
 
             // local programs
             "class<spotify>": "",    
-            "class<discord>": "",
-            "class<steam>": "",
+            "class<discord>": "",
+            "class<steam>": "",
             "class<.*keepassxc.*>": "",
 
             // custom
