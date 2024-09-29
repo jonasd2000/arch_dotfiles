@@ -1,23 +1,17 @@
 {
-    "modules-left": ["hyprland/workspaces", "sway/mode"],
-    "modules-center": ["clock", "idle_inhibitor"],
-    /* "modules-right": ["tray", "custom/scratchpad-indicator", "pulseaudio", "custom/power"], */
-    "modules-right": ["tray", "network", "custom/scratchpad-indicator", "pulseaudio", "custom/power"],
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock", "custom/nowplaying"],
+    "modules-right": ["tray", "bluetooth", "wireplumber", "network", "battery", "custom/power"],
 
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
-    },
     "hyprland/workspaces": { 
         "format": "{windows}",
-        // "format": "<sub>{icon}</sub>\n{windows}",
-        // "format-window-separator": "\n",
         "window-rewrite-default": "?",
         "window-rewrite": {
             "class<kitty>": "",
             // programming
-            "title<.*\\.py.*>": "",
-            "title<.*\\.rs.*>": "",
-            "title<.*\\.go.*>": "",
+            "title<.*\\.py.*>": "",
+            "title<.*\\.rs.*>": "",
+            "title<.*\\.go.*>": "󰟓",
             "title<.*\\.html.*>": "",
             "title<.*\\.css.*>": "",
 
@@ -34,8 +28,8 @@
 
             // local programs
             "class<spotify>": "",    
-            "class<discord>": "",
-            "class<steam>": "",
+            "class<discord>": "",
+            "class<steam>": "",
             "class<.*keepassxc.*>": "",
 
             // custom
@@ -44,58 +38,64 @@
         }
     },
     "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-wifi": "{icon}",
+        "format-icons": {
+            "wifi": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+            "disconnected": ["󰤮"]
+        },
         "format-ethernet": "{ifname} ",
         "format-disconnected": "", 
         "max-length": 50,
-        "on-click": "kitty -e 'nmtui'"
-    },
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-icons": {
-            "activated": "",
-            "deactivated": ""
-        },
-		"on-click": "bash /home/dg/.local/bin/toggleRemote"
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
     },
     "tray": {
         "icon-size": 15,
         "spacing": 10
     },
     "clock": {
-        // "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}",
-		"on-click": "gnome-calendar",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%d/%m/%Y}",
     },
-    "pulseaudio": {
-        "format": "{volume}% {icon} ",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": "0% {icon} ",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
+    "custom/nowplaying": {
+        "exec": "$HOME/.config/waybar/scripts/now_playing.py",
+        "interval": 1,
+        "format": "{} ",
+        "escape": true,
+    },
+    "bluetooth": {
+        "format-disabled": "", // an empty format will hide the module
+        "format": "",
+        "format-connected": "󰂱",
+        // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+        "on-click": "kitty -e bluetuith"
+    },
+    "wireplumber": {
+        "format": "{icon}",
+        "format-muted": "",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "pavucontrol"
+        "tooltip": true,
+        "tooltip-format": "{node_name} {volume}%",
+        "reverse-scrolling": true,
+    },
+    "battery": {
+        "interval": 60,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon}",
+        "format-icons": ["", "", "", "", ""],
+        "max-length": 25,
+        "tooltip-format": "{capacity}%\n{timeTo}"
     },
 	"custom/power": {
-		"format": " ",
+		"format": "",
 		"on-click": "wlogout"
 	},
-    "custom/scratchpad-indicator": {
-        "format-text": "{}hi",
-        "return-type": "json",
-        "interval": 3,
-        "exec": "~/.local/bin/scratchpad-indicator 2> /dev/null",
-        "exec-if": "exit 0",
-        "on-click": "swaymsg 'scratchpad show'",
-        "on-click-right": "swaymsg 'move scratchpad'"
-    }
 }

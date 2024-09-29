@@ -5,8 +5,8 @@
     box-shadow: none;
 
     border: none;
-    font-family: Font Awesome, Noto Sans, Roboto, Arial, sans-serif;
-    font-size: 16px;
+    font-family: Noto_Sans;
+    font-size: 18px;
     border-radius: 20px;
 }
 
@@ -14,25 +14,33 @@ window {
 	font-weight: 600;
 }
 window#waybar {
-    color: @accent;
+    color: @foreground;
     background: transparent; 
 }
 /*-----module groups----*/
 .modules-right {
-	background-color: alpha(@lowlight, 0.85);
-    margin: 5px 10px 0 0;
+    background-color: alpha(@lowlight, 0.85);
+    margin: 5px 5px 0 0;
+}
+.modules-right * {
+    padding: 0px 12px;
 }
 .modules-center {
-	background-color: alpha(@lowlight, 0.85);
+    background-color: alpha(@lowlight, 0.85);
     margin: 5px 0 0 0;
+    padding: 0 2px;
+}
+.modules-center * {
+    margin: 0px 5px;
 }
 .modules-left {
     margin: 5px 0 0 5px;
-	background-color: alpha(@lowlight, 0.85);
+    background-color: alpha(@lowlight, 0.85);
 }
 /*-----modules indv----*/
 #workspaces button {
     color: @highlight;
+    padding: 0px 8px;
 }
 #workspaces button:hover {
     background: @highlight;
@@ -45,38 +53,23 @@ window#waybar {
     background-color: rgba(255,104,51,0.85);
 }
 
-#clock,
-#battery,
-#cpu,
-#memory,
-#temperature,
-#network,
-#pulseaudio,
-#custom-media,
-#tray,
-#mode,
-#custom-power,
-#custom-menu,
-#idle_inhibitor {
-    padding: 0 10px;
-}
-#mode {
-    color: #cc3436;
-    font-weight: bold;
+#clock {
+    color: @accent;
 }
 #custom-power {
-    background-color: rgba(0,119,179,0.6);
+    color: @accent;
     border-radius: 100px;
-    margin: 5px 5px;
-    padding: 1px 1px 1px 6px;
+    margin: 0 8px;
+}
+#tray {
+    margin: 0px 4px;
+}
+#tray * {
+    padding: 0px;
+    margin: 0px;
 }
 /*-----Indicators----*/
-#idle_inhibitor.activated {
-    color: #2dcc36;
-}
-#pulseaudio.muted {
-    color: #cc3436;
-}
+
 #battery.charging {
     color: #2dcc36;
 }
@@ -84,8 +77,5 @@ window#waybar {
 	color: #e6e600;
 }
 #battery.critical:not(.charging) {
-    color: #cc3436;
-}
-#temperature.critical {
     color: #cc3436;
 }
