@@ -61,6 +61,7 @@
         "interval": 1,
         "format": "{} ",
         "escape": true,
+        "on-click": "playerctl play-pause",
     },
     "bluetooth": {
         "format-disabled": "", // an empty format will hide the module
