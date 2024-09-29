@@ -28,6 +28,7 @@ window#waybar {
 .modules-center {
     background-color: alpha(@lowlight, 0.85);
     margin: 5px 0 0 0;
+    padding: 0 2px;
 }
 .modules-center * {
     margin: 0px 5px;
