@@ -1,7 +1,7 @@
 {
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock", "custom/nowplaying"],
-    "modules-right": ["tray", "bluetooth", "pulseaudio", "network", "battery", "custom/power"],
+    "modules-right": ["tray", "bluetooth", "wireplumber", "network", "battery", "custom/power"],
 
     "hyprland/workspaces": { 
         "format": "{windows}",
@@ -73,13 +73,13 @@
         "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
         "on-click": "kitty -e bluetuith"
     },
-    "pulseaudio": {
+    "wireplumber": {
         "format": "{icon}",
         "format-icons": {
             "default": ["", "", ""]
         },
         "tooltip": true,
-        "tooltip-format": "{desc} {volume}%",
+        "tooltip-format": "{node_name} {volume}%",
         "reverse-scrolling": true,
     },
     "battery": {
