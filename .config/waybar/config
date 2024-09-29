@@ -75,6 +75,7 @@
     },
     "wireplumber": {
         "format": "{icon}",
+        "format-muted": "",
         "format-icons": {
             "default": ["", "", ""]
         },
