@@ -57,9 +57,10 @@
         "format-alt": "{:%d/%m/%Y}",
     },
     "custom/nowplaying": {
-        "exec": "~/.config/waybar/scripts/now_playing.sh",
-        "interval": 2,
+        "exec": "$HOME/.config/waybar/scripts/now_playing.py",
+        "interval": 1,
         "format": "{} ",
+        "escape": true,
     },
     "bluetooth": {
         "format-disabled": "", // an empty format will hide the module
