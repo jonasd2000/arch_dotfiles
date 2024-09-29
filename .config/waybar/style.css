@@ -23,7 +23,7 @@ window#waybar {
     margin: 5px 5px 0 0;
 }
 .modules-right * {
-    margin: 0px 8px;
+    padding: 0px 12px;
 }
 .modules-center {
     background-color: alpha(@lowlight, 0.85);
@@ -59,19 +59,17 @@ window#waybar {
 #custom-power {
     color: @accent;
     border-radius: 100px;
-    margin: 0 16px 0 16px;
+    margin: 0 8px;
 }
 #tray {
-    margin: 0px 8px 0px 8px;
+    margin: 0px 4px;
 }
 #tray * {
+    padding: 0px;
     margin: 0px;
 }
 /*-----Indicators----*/
 
-#pulseaudio.muted {
-    color: #cc3436;
-}
 #battery.charging {
     color: #2dcc36;
 }
