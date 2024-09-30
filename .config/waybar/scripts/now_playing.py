@@ -65,9 +65,9 @@ class NowPlaying:
 
     def get_status(self) -> str:
         if not self.players:
-            return "no players"
+            return ""
         if not self.active_players:
-            return "no active players"
+            return ""
         return self.get_playing_output()
 
     def update(self) -> None:
