@@ -91,11 +91,11 @@ def scroll_text(text: str, max_characters: int, offset: int):
 def main():
     now_playing = NowPlaying(player_priority=PLAYER_PRIORITY)
 
-    t = time.time()
     i = 0
     old_status = ""
 
     while True:
+        t = time.time()
         now_playing.update()
 
         if now_playing.status != old_status:
@@ -111,10 +111,10 @@ def main():
             flush=True
         )
 
-        time.sleep(INTERVAL - (time.time() - t))
-        t = time.time()
         i += 1
         old_status = now_playing.status
+
+        time.sleep(INTERVAL - (time.time() - t))
 
 
 if __name__ == "__main__":
