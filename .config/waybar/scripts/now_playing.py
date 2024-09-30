@@ -17,7 +17,8 @@ if not players:  # if there are no players open
 
 for player in players:
     get_status = subprocess.run(
-            f"playerctl status --player {player["name"]}".split(),
+            ["playerctl", "status",
+             "--player", player["name"]],
             capture_output=True
     )
     player["status"] = get_status.stdout.decode().strip()
