@@ -11,6 +11,10 @@ players = [
     get_players.stdout.decode().split("\n")[:-1]
 ]
 
+if not players:  # if there are no players open
+    print("")
+    sys.exit(1)
+
 for player in players:
     get_status = subprocess.run(
             f"playerctl status --player {player["name"]}".split(),
@@ -24,7 +28,7 @@ for player in players:
 
 active_players = list(filter(lambda pl: pl["status"] == "Playing", players))
 
-if not active_players:
+if not active_players:  # if no player is currently playing anything
     print("")
     sys.exit(1)
 
