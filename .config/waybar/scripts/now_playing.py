@@ -17,7 +17,10 @@ for player in players:
             capture_output=True
     )
     player["status"] = get_status.stdout.decode().strip()
-    player["priority"] = [i for i, item in enumerate(player_priority) if re.search(item, player["name"])] or [100]
+    player["priority"] = [
+        i for i, item in enumerate(player_priority)
+        if re.search(item, player["name"])
+    ] or [100]
 
 active_players = list(filter(lambda pl: pl["status"] == "Playing", players))
 
@@ -27,4 +30,8 @@ if not active_players:
 
 
 active_players_prio = sorted(active_players, key=lambda pl: pl["priority"][0])
-subprocess.run(["playerctl", "metadata", "--player", active_players_prio[0]["name"],  "--format", "{{artist}} - {{title}}"])
+subprocess.run([
+    "playerctl", "metadata",
+    "--player", active_players_prio[0]["name"],
+    "--format", "{{artist}} - {{title}}"
+])
