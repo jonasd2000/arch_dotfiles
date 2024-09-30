@@ -3,7 +3,7 @@ import subprocess
 import re
 import time
 
-MAX_OUTPUT_LENGTH = 50
+MAX_OUTPUT_LENGTH = 30
 INTERVAL = 1
 PLAYER_PRIORITY = ["spotify", "firefox"]
 
@@ -65,9 +65,9 @@ class NowPlaying:
 
     def get_status(self) -> str:
         if not self.players:
-            return ""
+            return "no players"
         if not self.active_players:
-            return ""
+            return "no active players"
         return self.get_playing_output()
 
     def update(self) -> None:
@@ -76,10 +76,46 @@ class NowPlaying:
         self.status = self.get_status()
 
 
-now_playing = NowPlaying(player_priority=PLAYER_PRIORITY)
-t = time.time()
-while True:
-    now_playing.update()
-    print(now_playing.status, flush=True)
-    time.sleep(INTERVAL - (time.time() - t))
+def scroll_text(text: str, max_characters: int, offset: int):
+    if len(text) < max_characters:
+        return text
+    text += ". "
+    overhang = (offset + max_characters) - len(text)
+    post = ""
+    if overhang > 0:
+        post = text[:overhang]
+
+    return text[offset:offset+max_characters] + post
+
+
+def main():
+    now_playing = NowPlaying(player_priority=PLAYER_PRIORITY)
+
     t = time.time()
+    i = 0
+    old_status = ""
+
+    while True:
+        now_playing.update()
+
+        if now_playing.status != old_status:
+            i = 0
+        text_offset = i % len(now_playing.status)
+
+        print(
+            scroll_text(
+                now_playing.status,
+                max_characters=MAX_OUTPUT_LENGTH,
+                offset=text_offset
+            ),
+            flush=True
+        )
+
+        time.sleep(INTERVAL - (time.time() - t))
+        t = time.time()
+        i += 1
+        old_status = now_playing.status
+
+
+if __name__ == "__main__":
+    main()
