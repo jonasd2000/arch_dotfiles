@@ -58,7 +58,6 @@
     },
     "custom/nowplaying": {
         "exec": "$HOME/.config/waybar/scripts/now_playing.py",
-        "interval": 1,
         "format": "{} ",
         "escape": true,
         "on-click": "playerctl play-pause",
