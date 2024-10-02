@@ -1,7 +1,9 @@
 #! /usr/bin/python3
 import subprocess
 import re
-import time
+
+from common import dispatch
+
 
 MAX_OUTPUT_LENGTH = 30
 INTERVAL = 1
@@ -88,33 +90,36 @@ def scroll_text(text: str, max_characters: int, offset: int):
     return text[offset:offset+max_characters] + post
 
 
+def print_status(now_playing: NowPlaying, old_status: str = "", i: int = 0):
+    now_playing.update()
+
+    if now_playing.status != old_status:
+        i = 0
+    text_offset = i % len(now_playing.status)
+
+    print(
+        scroll_text(
+            now_playing.status,
+            max_characters=MAX_OUTPUT_LENGTH,
+            offset=text_offset
+        ),
+        flush=True
+    )
+
+    i += 1
+    old_status = now_playing.status
+
+    return [], {"now_playing": now_playing, "old_status": old_status, "i": i}
+
+
 def main():
     now_playing = NowPlaying(player_priority=PLAYER_PRIORITY)
 
-    i = 0
-    old_status = ""
-
-    while True:
-        t = time.time()
-        now_playing.update()
-
-        if now_playing.status != old_status:
-            i = 0
-        text_offset = i % len(now_playing.status)
-
-        print(
-            scroll_text(
-                now_playing.status,
-                max_characters=MAX_OUTPUT_LENGTH,
-                offset=text_offset
-            ),
-            flush=True
-        )
-
-        i += 1
-        old_status = now_playing.status
-
-        time.sleep(INTERVAL - (time.time() - t))
+    dispatch(
+        fn=print_status,
+        interval=INTERVAL,
+        now_playing=now_playing,
+    )
 
 
 if __name__ == "__main__":
