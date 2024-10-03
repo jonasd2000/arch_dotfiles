@@ -1,7 +1,7 @@
 {
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock", "custom/nowplaying"],
-    "modules-right": ["tray", "bluetooth", "wireplumber", "network", "battery", "custom/power"],
+    "modules-right": ["tray", "custom/updates", "bluetooth", "wireplumber", "network", "battery", "custom/power"],
 
     "hyprland/workspaces": { 
         "format": "{windows}",
@@ -58,9 +58,13 @@
     },
     "custom/nowplaying": {
         "exec": "$HOME/.config/waybar/scripts/now_playing.py --interval 1 --player-priority spotify firefox",
-        "format": "{} ",
+        "return-type": "json",
         "escape": true,
         "on-click": "playerctl play-pause",
+    },
+    "custom/updates": {
+        "exec": "$HOME/.config/waybar/scripts/updates.py --interval 4",
+        "return-type": "json",
     },
     "bluetooth": {
         "format-disabled": "", // an empty format will hide the module
