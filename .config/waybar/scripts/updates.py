@@ -2,7 +2,7 @@
 
 import subprocess
 
-from common import dispatch
+from common import _main
 
 INTERVAL = 5
 
@@ -23,9 +23,5 @@ def print_updates():
     return [], {}
 
 
-def main():
-    dispatch(print_updates, interval=INTERVAL)
-
-
 if __name__ == "__main__":
-    main()
+    _main(print_updates)
