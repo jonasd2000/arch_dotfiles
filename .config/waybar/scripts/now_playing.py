@@ -2,12 +2,10 @@
 import subprocess
 import re
 
-from common import dispatch
+from common import get_parser, dispatch
 
 
 MAX_OUTPUT_LENGTH = 30
-INTERVAL = 1
-PLAYER_PRIORITY = ["spotify", "firefox"]
 
 
 class NowPlaying:
@@ -113,11 +111,15 @@ def print_status(now_playing: NowPlaying, old_status: str = "", i: int = 0):
 
 
 def main():
-    now_playing = NowPlaying(player_priority=PLAYER_PRIORITY)
+    parser = get_parser()
+    parser.add_argument("-P", "--player-priority", nargs="*")
+    args = parser.parse_args()
+
+    now_playing = NowPlaying(player_priority=args.player_priority)
 
     dispatch(
         fn=print_status,
-        interval=INTERVAL,
+        interval=args.interval,
         now_playing=now_playing,
     )
 
