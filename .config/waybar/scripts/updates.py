@@ -18,7 +18,7 @@ def get_updates():
 
 def print_updates():
     updates = get_updates()
-    print(len(updates))
+    print(len(updates), flush=True)
 
     return [], {}
 
