@@ -2,7 +2,7 @@
 
 import subprocess
 
-from common import dispatch
+from common import get_parser, dispatch
 
 INTERVAL = 5
 
@@ -24,7 +24,9 @@ def print_updates():
 
 
 def main():
-    dispatch(print_updates, interval=INTERVAL)
+    parser = get_parser()
+    args = parser.parse_args()
+    dispatch(print_updates, interval=args.interval)
 
 
 if __name__ == "__main__":
