@@ -58,7 +58,7 @@
     },
     "custom/nowplaying": {
         "exec": "$HOME/.config/waybar/scripts/now_playing.py --interval 1 --player-priority spotify firefox",
-        "format": "{} ",
+        "return-type": "json",
         "escape": true,
         "on-click": "playerctl play-pause",
     },

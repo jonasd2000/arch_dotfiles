@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 import subprocess
 import re
+import json
 
 from common import get_parser, dispatch
 
@@ -95,14 +96,18 @@ def print_status(now_playing: NowPlaying, old_status: str = "", i: int = 0):
         i = 0
     text_offset = i % len(now_playing.status)
 
-    print(
-        scroll_text(
-            now_playing.status,
-            max_characters=MAX_OUTPUT_LENGTH,
-            offset=text_offset
-        ),
-        flush=True
-    )
+    output = {
+            "text": scroll_text(
+                now_playing.status,
+                max_characters=MAX_OUTPUT_LENGTH,
+                offset=text_offset),
+            "alt": "",
+            "tooltip": now_playing.status,
+            "class": "",
+            "percentage": "",
+    }
+
+    print(json.dumps(output), flush=True)
 
     i += 1
     old_status = now_playing.status
@@ -116,11 +121,12 @@ def main():
     args = parser.parse_args()
 
     now_playing = NowPlaying(player_priority=args.player_priority)
+    kwargs = {"now_playing": now_playing}
 
     dispatch(
         fn=print_status,
         interval=args.interval,
-        now_playing=now_playing,
+        **kwargs
     )
 
 
