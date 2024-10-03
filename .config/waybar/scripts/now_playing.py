@@ -112,7 +112,7 @@ def print_status(now_playing: NowPlaying, old_status: str = "", i: int = 0):
 
 def main():
     parser = get_parser()
-    parser.add_argument("-P", "--player-priority", nargs="*")
+    parser.add_argument("-P", "--player-priority", nargs="*", default=[])
     args = parser.parse_args()
 
     now_playing = NowPlaying(player_priority=args.player_priority)
