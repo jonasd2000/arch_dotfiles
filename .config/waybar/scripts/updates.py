@@ -9,7 +9,7 @@ INTERVAL = 5
 
 def get_updates():
     buff_updates = subprocess.run(
-        ["yay", "-Qu"],
+        ["checkupdates", "&&", "yay", "-Qua"],
         capture_output=True,
     )
     updates = buff_updates.stdout.decode().split("\n")[:-1]
