@@ -88,7 +88,6 @@ class NowPlaying:
 
         return NowPlayingStatus.NoPlayers
 
-    @property
     def output_text(self) -> str:
         match self.status:
             case NowPlayingStatus.NoPlayers:
@@ -104,9 +103,11 @@ class NowPlaying:
         self.status = self.get_status()
 
 
-def scroll_text(text: str, max_characters: int, offset: int):
+def scroll_text(text: str, max_characters: int, step: int):
     if len(text) < max_characters:
         return text
+
+    offset = step % len(text)
     text += ". "
     overhang = (offset + max_characters) - len(text)
     post = ""
@@ -128,20 +129,20 @@ def get_css_class(now_playing):
             return ""
 
 
-def print_status(now_playing: NowPlaying, old_status: str = "", i: int = 0):
+def print_status(now_playing: NowPlaying, old_output: str = "", i: int = 0):
     now_playing.update()
+    now_playing_output = now_playing.output_text()
 
-    if now_playing.output_text != old_status:
+    if now_playing_output != old_output:
         i = 0
-    text_offset = i % len(now_playing.output_text)
 
     output = {
             "text": scroll_text(
-                now_playing.output_text,
+                now_playing_output,
                 max_characters=MAX_OUTPUT_LENGTH,
-                offset=text_offset),
+                step=i),
             "alt": "",
-            "tooltip": now_playing.output_text,
+            "tooltip": now_playing_output,
             "class": get_css_class(now_playing),
             "percentage": "",
     }
@@ -149,9 +150,12 @@ def print_status(now_playing: NowPlaying, old_status: str = "", i: int = 0):
     print(json.dumps(output), flush=True)
 
     i += 1
-    old_status = now_playing.output_text
-
-    return [], {"now_playing": now_playing, "old_status": old_status, "i": i}
+    kwargs = {
+        "now_playing": now_playing,
+        "old_output": now_playing_output,
+        "i": i,
+    }
+    return [], kwargs
 
 
 def main():
