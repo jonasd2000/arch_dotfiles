@@ -64,7 +64,7 @@
     },
     "custom/updates": {
         "exec": "$HOME/.config/waybar/scripts/updates.py --interval 4",
-        "format": "{}",
+        "return-type": "json",
     },
     "bluetooth": {
         "format-disabled": "", // an empty format will hide the module

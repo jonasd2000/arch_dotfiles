@@ -1,10 +1,9 @@
 #! /usr/bin/python3
 
 import subprocess
+import json
 
 from common import _main
-
-INTERVAL = 5
 
 
 def get_updates():
@@ -16,9 +15,27 @@ def get_updates():
     return updates
 
 
+def get_text(updates):
+    if len(updates) > 0:
+        return ""
+    return ""
+
+def get_css_class(updates):
+    if len(updates) > 0:
+        return "pending"
+    return ""
+
+
 def print_updates():
     updates = get_updates()
-    print(len(updates), flush=True)
+    output = {
+        "text": get_text(updates),
+        "alt": "",
+        "tooltip": f"{len(updates)} updates available",
+        "class": get_css_class(updates),
+        "percentage": "",
+    }
+    print(json.dumps(output), flush=True)
 
     return [], {}
 
