@@ -24,7 +24,7 @@ def get_updates():
 def get_text(updates):
     if len(updates) > 0:
         return ""
-    return ""
+    return ""  # ""
 
 def get_tooltip(updates):
     tooltip = f"{len(updates)} updates available"
