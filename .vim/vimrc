@@ -39,6 +39,10 @@ set smarttab
 set tabstop=4
 set expandtab
 
+" line numbers
+:set number
+:set relativenumber
+
 " bracket auto
 inoremap { {}<Esc>ha
 inoremap ( ()<Esc>ha
