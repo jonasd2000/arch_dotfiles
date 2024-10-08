@@ -1,35 +1,39 @@
+@import url("/home/jonas/.config/colors/colors-gtk3.css");
+
 #entry {
   border-radius: 3px;
   padding: 2px 3px 2px 3px;
 }
 
 #entry:selected {
-  background-color: #5e81ac;
+  border: 1px solid @highlight;
+  background-color: @background;
+  outline: none;
 }
 
 #text:selected {
-  color: #d8dee9;
+  color: @accent;
 }
 
 #window {
   padding: 2px;
-  background-color: rgba(53, 59, 73, 0.97);
-  border: 4px solid #ebcb8b;
+  background-color: alpha(@background, 0.9);
+  border: 2px solid @highlight;
   border-radius: 8pt;
   font-family: 'Inter Nerd Font Propo','FuraCode Nerd Font Mono';
   font-size: 15px;
 }
 
 #input {
-  border: 2px solid #5e81ac;
-  background-color: #4c566a;
-  color: #d8dee9;
+  border: 2px solid @highlight;
+  background-color: alpha(@lowlight, 0.9);
+  color: @highlight;
   padding: 3px 5px 3px 5px;
   border-radius: 5px;
 }
 
 #inner-box {
-  color: #d8dee9;
+  color: @foreground;
   padding: 2px;
   background-color: transparent;
 }
