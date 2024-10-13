@@ -6,8 +6,7 @@
 }
 
 #entry:selected {
-  border: 1px solid @highlight;
-  background-color: @background;
+  background-color: @lowlight;
   outline: none;
 }
 
