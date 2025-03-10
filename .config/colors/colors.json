@@ -1,7 +1,8 @@
-{
-    "Eerie black":"1c1c1c",
-    "Timberwolf":"d0d0d0",
-    "Midnight green":"0d3841",
-    "Flax":"e3cb85",
-    "Blue (Munsell)":"2495ab"
-}
+[
+    {"name": "Eerie black", "hex":"1c1c1c", "function": "background"},
+    {"name": "Timberwolf", "hex": "d0d0d0", "function": "foreground"},
+    {"name": "Midnight green", "hex": "0d3841", "function": "lowlight"},
+    {"name": "Flax", "hex": "e3cb85", "function": "accent"},
+    {"name": "Blue (Munsell)", "hex": "2495ab", "function": "highlight"},
+    {"name": "Orange (Crayola)", "hex": "ff6b35", "function": "attention"}
+]

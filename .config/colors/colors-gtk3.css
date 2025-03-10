@@ -3,3 +3,4 @@
 @define-color lowlight      rgb( 13,  56,  65); /* midnight green*/
 @define-color accent        rgb(227, 203, 133); /* flax */
 @define-color highlight     rgb( 36, 149, 171); /* blue (munsell) */
+@define-color attention     rgb(255, 107,  53); /* orange (crayola) */
