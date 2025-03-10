@@ -1,0 +1,32 @@
+# Take a look at the mako manpage with the command:
+#   man 5 mako
+# To view all configuration options.
+
+# font=Cozette 11
+format=<b>%a</b>\n%s\n<small>%b</small>
+sort=-time
+output=DP-2
+layer=overlay
+anchor=top-right
+background-color=#1c1c1c
+text-color=#d0d0d0
+width=300
+height=100
+margin=5
+padding=0,5,10
+border-size=2
+border-color=#0d3841
+border-radius=10
+icons=1
+max-icon-size=64
+default-timeout=5000
+ignore-timeout=1
+
+[urgency=normal]
+border-color=#d0d0d0
+
+[urgency=high]
+border-color=#ff6b35
+text-color=#e3cb85
+default-timeout=0
+
