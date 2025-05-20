@@ -1,0 +1,25 @@
+#! /bin/sh
+
+path="$(readlink -f $1)"
+
+if ! [ -f "$path" ]; then
+  echo "File $path does not exist"
+  exit 0
+fi
+
+current_wallpaper="$(hyprctl hyprpaper listloaded)"
+
+res="$(hyprctl hyprpaper reload ,"$path")"
+
+if [ "$res" != "ok" ]; then
+  echo "Unable to load file $path"
+  hyprctl dispatch exec hyprpaper --quiet
+  hyprctl hyprpaper reload ,"$current_wallpaper" --quiet
+  exit 0
+fi
+
+wallust run "$path" --quiet
+eww reload
+
+echo "Wallpaper set to $path"
+
