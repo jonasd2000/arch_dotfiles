@@ -1,0 +1,4 @@
+$cursor = rgb({{cursor | rgb}})
+$background = rgb({{background | rgb}})
+$foreground = rgb({{foreground | rgb}})
+

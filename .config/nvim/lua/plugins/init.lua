@@ -13,6 +13,12 @@ return {
     end,
   },
 
+  {
+    "brenoprata10/nvim-highlight-colors",
+    config = function()
+        require "configs.nvim-highlight-colors"
+    end,
+  }
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
 

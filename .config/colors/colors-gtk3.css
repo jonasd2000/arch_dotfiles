@@ -1,6 +1,6 @@
-@define-color background    rgb( 28,  28,  28); /* eerie black */
-@define-color foreground    rgb(208, 208, 208); /* timberwolf */
-@define-color lowlight      rgb( 13,  56,  65); /* midnight green*/
-@define-color accent        rgb(227, 203, 133); /* flax */
-@define-color highlight     rgb( 36, 149, 171); /* blue (munsell) */
-@define-color attention     rgb(255, 107,  53); /* orange (crayola) */
+@define-color background rgb(0,2,5);
+@define-color foreground rgb(224,223,207);
+@define-color highlight rgb(120,135,105);
+@define-color lowlight rgb(13,57,66);
+@define-color accent rgb(165,163,117);
+@define-color alert rgb(245, 43, 10);
