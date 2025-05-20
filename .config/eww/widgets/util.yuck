@@ -1,0 +1,26 @@
+(defwidget closer [window]
+    (eventbox
+        :style "background-color: transparent;"
+        :onclick "eww close ${window} && eww close ${window}-closer"
+    )
+)
+
+(defwidget reveal-on-hover [ishovered hovered-varname ?transition ?duration ?toggle]
+    (eventbox
+        :class "reveal-on-hover"
+        :orientation "h"
+        :onhover "eww update ${hovered-varname}=true"
+        :onhoverlost "eww update ${hovered-varname}=false"
+        (stack
+            :selected {ishovered ? 1 : 0}
+            :transition {transition ?: "slideup"}
+            :same-size true
+            (box
+                (children :nth 0)
+            )
+            (box
+                (children :nth 1)
+            )
+        )
+    )
+)

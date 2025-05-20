@@ -1,0 +1,18 @@
+#!/bin/sh
+
+UPDATES="$(echo "$(checkupdates && yay -Qua)")"
+
+N_UPDATES="$(echo -n "$UPDATES" | wc -l)"
+
+if [[ N_UPDATES -gt 0  ]]; then
+    eww update updates_available=true
+else
+    eww update updates_available=false
+fi
+
+MSG="updates available"
+if [[ N_UPDATES -eq "1" ]]; then
+    MSG="update available"
+fi
+
+echo "$N_UPDATES $MSG"

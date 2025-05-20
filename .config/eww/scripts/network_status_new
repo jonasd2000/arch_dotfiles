@@ -1,0 +1,140 @@
+#!/bin/python3
+
+import json
+
+import pydbus
+from gi.repository import GLib
+
+
+class State(dict):
+    def __str__(self) -> str:
+        return json.dumps(self)
+
+    def update(self, props_changed) -> None:
+        for k, v in self.items():
+            self[k] = props_changed.get(k, v)
+
+
+connection_types = {
+    "802-3-ethernet": "ethernet",
+    "802-11-wireless": "wifi",
+    "": None,
+}
+connection_states = {
+        0: "unknown",
+        10: "asleep",
+        20: "disconnected",
+        30: "disconnecting",
+        40: "connecting",
+        50: "connecting_local",
+        60: "connected_site",
+        70: "connected_global",
+}
+
+
+def print_state(network_state, primary_connection_state, access_point_state):
+    print(json.dumps({
+        "connection_type": connection_types[network_state["PrimaryConnectionType"]],
+        "name": primary_connection_state["Id"],
+        "signal": access_point_state["Strength"],
+        "status": connection_states[network_state["State"]]
+    }), flush=True)
+
+
+def handle_change(iface, props_changed, props_removed):
+    global network_state, primary_connection, access_point
+
+    match iface:
+        case "org.freedesktop.NetworkManager":
+            network_state.update(props_changed)
+            if "PrimaryConnection" in props_changed:
+                primary_connection = get_primary_connection(network_state)
+                handle_change(
+                    iface="org.freedesktop.NetworkManager.Connection.Active",
+                    props_changed={
+                        "SpecificObject": primary_connection.SpecificObject if (primary_connection is not None) else None,
+                        "Id": primary_connection.Id if (primary_connection is not None) else None,
+                    },
+                    props_removed=[]
+                )
+        case "org.freedesktop.NetworkManager.Connection.Active":
+            primary_connection_state.update(props_changed)
+            if "SpecificObject" in props_changed:
+                access_point = get_access_point(primary_connection_state)
+                handle_change(
+                    iface="org.freedesktop.NetworkManager.AccessPoint",
+                    props_changed={
+                        "Strength": access_point.Strength if (access_point is not None) else None
+                    },
+                    props_removed=[]
+                )
+        case "org.freedesktop.NetworkManager.AccessPoint":
+            access_point_state.update(props_changed)
+        case _:
+            raise ValueError(f"Unknown interface: {iface}")
+
+    print_state(network_state, primary_connection_state, access_point_state)
+
+
+def get_primary_connection(network_state):
+    primary_connection = network_state.get("PrimaryConnection", "/")
+
+    if primary_connection == "/":
+        return None
+
+    primary_connection = bus.get(
+        'org.freedesktop.NetworkManager',
+        network_state["PrimaryConnection"]
+    )
+    primary_connection.onPropertiesChanged = handle_change
+
+    return primary_connection
+
+
+def get_access_point(primary_connection_state):
+    access_point_object = primary_connection_state.get("SpecificObject")
+
+    if access_point_object is None:
+        return None
+
+    access_point = bus.get(
+        'org.freedesktop.NetworkManager',
+        access_point_object
+    )
+    access_point.onPropertiesChanged = handle_change
+
+    return access_point
+
+
+bus = pydbus.SystemBus()
+
+network = bus.get(
+    'org.freedesktop.NetworkManager',
+    '/org/freedesktop/NetworkManager'
+)
+network_state = State({
+    "connected": network.PrimaryConnection != "/",
+    "PrimaryConnection": network.PrimaryConnection,
+    "PrimaryConnectionType": network.PrimaryConnectionType,
+    "State": network.State,
+})
+
+primary_connection = get_primary_connection(network_state)
+primary_connection_state = State({
+    "Id": primary_connection.Id,
+    "SpecificObject": primary_connection.SpecificObject,
+})
+
+access_point = get_access_point(primary_connection_state)
+access_point_state = State({
+    "Strength": access_point.Strength,
+})
+
+network.onPropertiesChanged = handle_change
+mainloop = GLib.MainLoop()
+
+try:
+    print_state(network_state, primary_connection_state, access_point_state)
+    mainloop.run()
+except KeyboardInterrupt:
+    mainloop.quit()

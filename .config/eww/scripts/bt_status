@@ -1,0 +1,46 @@
+#!/bin/python3
+
+import json
+import pydbus
+from gi.repository import GLib
+
+INTERFACE = "org.bluez.Adapter1"
+
+
+bus = pydbus.SystemBus()
+dongle = bus.get('org.bluez', '/org/bluez/hci0')
+
+power_state = dongle.PowerState
+powered = dongle.Powered
+discovering = dongle.Discovering
+
+
+def print_state():
+    print(json.dumps({
+        "power_state": power_state,
+        "powered": powered,
+        "discovering": discovering
+    }), flush=True)
+
+
+def handle_change(iface, prop_changed, prop_removed):
+    global power_state, powered, discovering
+    if iface != INTERFACE:
+        return
+
+    power_state = prop_changed.get("PowerState", power_state)
+    powered = prop_changed.get("Powered", powered)
+    discovering = prop_changed.get("Discovering", discovering)
+
+    print_state()
+
+
+dongle.onPropertiesChanged = handle_change
+
+mainloop = GLib.MainLoop()
+
+try:
+    print_state()
+    mainloop.run()
+except KeyboardInterrupt:
+    mainloop.quit()

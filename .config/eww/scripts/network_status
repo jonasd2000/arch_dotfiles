@@ -1,0 +1,47 @@
+#!/bin/sh
+
+connected="false"
+c_name=""
+c_type=""
+rate=""
+signal=""
+
+network_connections="$(nmcli -g TYPE,ACTIVE,STATE,NAME connection show --active)"
+# while loop chooses last connection from above command
+
+while read -r line; do
+    IFS=":" read -r -a connection_info <<< "$line" # split line at ":" into connection_info
+    c_type_i=${connection_info[0]}
+    c_active_i=${connection_info[1]}
+    c_state_i=${connection_info[2]}
+    c_name_i=${connection_info[3]}
+
+    if [[ $c_name_i == "lo" ]]; then
+        continue
+    fi
+    connected="true"
+    c_name="$c_name_i"
+    c_type="$c_type_i"
+    if [[ $c_type == "802-3-ethernet" ]]; then
+        c_type="Ethernet"
+    elif [[ $c_type == "802-11-wireless" ]]; then
+        c_type="Wifi"
+        active_wifi_output="$(nmcli -g IN-USE,SSID,RATE,SIGNAL device wifi list | grep '^*')"
+        IFS=":" read -r -a wifi_info <<< "$active_wifi_output"
+        w_name=${wifi_info[1]}
+        w_rate=${wifi_info[2]}
+        w_signal=${wifi_info[3]}
+        
+        rate="$w_rate"
+        signal="$w_signal"
+    fi
+done <<< "$network_connections"
+
+JSON_STRING=$(jq -n \
+    --arg connected "$connected" \
+    --arg name "$c_name" \
+    --arg c_type "$c_type" \
+    --arg rate "$rate" \
+    --arg signal "$signal" \
+    '{connected: $connected, type: $c_type, name: $name, rate: $rate, signal: $signal}' )
+echo "$JSON_STRING"

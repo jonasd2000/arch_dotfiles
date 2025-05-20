@@ -1,0 +1,174 @@
+(defwidget menu_time []
+    (box :orientation "v"
+         (label :halign "end"
+                :text {formattime(EWW_TIME, "%T")}
+                :justify "right"
+         )
+         (label :halign "end"
+                :text {formattime(EWW_TIME, "%A, %e. %B %Y")}
+                :justify "right"
+         )
+    )
+)
+
+(defwidget sysbutton [?onclick ?onrightclick]
+    (button
+        :class "sysbutton"
+        :width 64
+        :height 64
+        :onclick onclick
+        :onrightclick onrightclick
+        (children)
+    )
+)
+
+(deflisten bluetooth_status "scripts/bt_status")
+(defwidget sysbluetoothbutton []
+    (sysbutton
+        :onclick "bluetoothctl power ${bluetooth_status.powered ? "off" : "on"}"
+        :onrightclick "hyprctl dispatch exec 'kitty bluetuith'"
+        (image
+            :icon {(bluetooth_status?:"{}").powered?:false ? "bluetooth-active-symbolic" : "bluetooth-disabled-symbolic"}
+            :icon-size "large-toolbar"
+        )
+    )
+)
+
+(deflisten network_status "scripts/network_status_new")
+(defwidget sysnetworkbutton []
+    (tooltip
+        (label
+            :text {matches(network_status.status, "^connected*") == false ? "" : "Name: ${network_status.name}\\nSignal: ${network_status.signal?:'-'}\\nRate: ${network_status.rate?:'-'}"}
+        )
+        (sysbutton
+            :onclick "hyprctl dispatch exec networkmanager_dmenu"
+            (image
+                :icon {
+                    ((network_status?:"{}").status?:"disconnected") == "disconnected" ?
+                        "network-wired-disconnected-symbolic" :
+                        matches(network_status.status, "^connecting*") ?
+                        "network-wired-acquiring-symbolic" :
+                            network_status.connection_type == "ethernet" ?
+                                "network-wired-symbolic" :
+                                network_status.signal > 90 ? "network-wireless-signal-excellent-symbolic" :
+                                    network_status.signal > 66 ? "network-wireless-signal-good-symbolic" :
+                                        network_status.signal > 50 ? "network-wireless-signal-ok-symbolic" :
+                                            network_status.signal > 0  ? "network-wireless-signal-weak-symbolic" : "network-wireless-signal-none-symbolic"
+                }
+                :icon-size "large-toolbar"
+            )
+        )
+    )
+)
+
+(defvar updates_available false)
+(defpoll updates 
+    :interval "10s"
+    "$HOME/.config/eww/scripts/sysupdates"
+)
+(defwidget sysupdatebutton []
+    (tooltip
+        (label :text updates)
+        (overlay :hexpand true 
+                 (sysbutton
+                         :onclick "hyprctl dispatch exec 'kitty yay'"
+                         (image :icon "object-rotate-right-symbolic"
+                                :icon-size "large-toolbar")
+                 )
+                 (transform :translate-x "10%"
+                            :translate-y "-10%"
+                     (label :text ""
+                            :class "updatealert"
+                            :visible updates_available) 
+                 )
+        )
+    )
+)
+
+(defwidget syspowerbutton []
+    (sysbutton
+        :onclick "hyprctl dispatch exec wlogout"
+        (image 
+            :icon "system-shutdown-symbolic"
+            :icon-size "large-toolbar"
+        )
+    )
+)
+
+
+(defpoll donotdisturb_active 
+    :interval "5s"
+    "makoctl mode | grep 'do-not-disturb' || true"
+)
+(defwidget syscontrol []
+    (box
+        :class "sysbuttons"
+        :orientation "h"
+        :space-evenly false
+        :halign "center"
+        (sysbutton
+            :onclick "scripts/toggle_notification_mode"
+            (image
+                :icon {donotdisturb_active == "do-not-disturb" ? "notifications-disabled-symbolic" : "audio-speakers-symbolic"}
+                :icon-size "large-toolbar"
+            )
+        )
+        (sysbluetoothbutton)
+        (sysnetworkbutton)
+        (sysupdatebutton)
+        (syspowerbutton)
+    )
+)
+
+(defwidget menu []
+    (box
+        :class "mainwidget menuwidget"
+        :orientation "v"
+        :space-evenly false
+        (box
+            :orientation "v"
+            :space-evenly false
+            (box "Hello There!")
+            (menu_time)
+        )
+        (box
+            :orientation "v"
+            :space-evenly false
+            (music)
+        )
+        (box
+            :orientation "v"
+            :space-evenly false
+            :valign "end"
+            (systray 
+                :halign "start"
+                :spacing 5
+                :icon-size 30
+            )
+            (syscontrol)
+        )
+    )
+)
+
+(defwindow menu-closer
+    :monitor 0
+    :geometry (geometry :width "100%" :height "100%")
+    :stacking "fg"
+    :focusable false
+    :exclusive true
+    (closer :window "menu")
+)
+
+(defwindow menu
+    :monitor 0
+    :stacking "fg"
+    :namespace "ewwmenu"
+    :geometry (geometry
+        :x "0%"
+        :y "0%"
+        :width "25%"
+        :height "50%"
+        :anchor "top right"
+    )
+    (menu)
+)

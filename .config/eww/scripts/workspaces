@@ -1,0 +1,41 @@
+#!/bin/sh
+
+handle() {
+    case $1 in workspacev2*)
+        workspaces
+    esac
+}
+
+workspaces() {
+    WORKSPACES=("1" "2" "3" "4" "5" "6" "7" "8" "9")
+    OCCUPIED_WORKSPACES="$(echo -e "$(hyprctl -j workspaces)" | jq -r '.[] | .id')"
+    ACTIVE_WORKSPACE="$(echo -e "$(hyprctl -j activeworkspace)" | jq -r '.id')"
+
+    ws_info=()
+    for WS in "${WORKSPACES[@]}"
+    do
+        if [ $ACTIVE_WORKSPACE -eq $WS ]; then
+            # active workspace
+            status="active"
+        elif [[ "${OCCUPIED_WORKSPACES[*]}" =~ "${WS}" ]]; then
+            # occupied workspace
+            status="occupied"
+        else
+            # empty workspace
+            status="empty"
+        fi
+
+        workspace_info=$(jq -n -c\
+                            --arg index "$WS" \
+                            --arg status "$status" \
+                            '{id: $index, status: $status}')
+        ws_info+=("$workspace_info")
+    done
+
+    echo $(jq -c -n '$ARGS.positional' --jsonargs "${ws_info[@]}")
+}
+
+workspaces
+socat -U - UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock | while read -r line;
+    do handle "$line";
+done

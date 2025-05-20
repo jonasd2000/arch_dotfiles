@@ -1,0 +1,5 @@
+#!/bin/sh
+
+makoctl mode -t do-not-disturb
+notification_mode="$(makoctl mode | grep 'do-not-disturb' || true)"
+eww update donotdisturb_active="$notification_mode"

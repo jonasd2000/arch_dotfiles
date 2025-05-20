@@ -1,0 +1,23 @@
+(deflisten workspaces "$HOME/.config/eww/scripts/workspaces")
+
+(defwidget workspaces [active occupied empty]
+    (box
+        :class "workspaces"
+        :valign "center"
+        :space-evenly false
+        :spacing 5
+        (for workspace in workspaces
+            (button
+                :class "workspace-button"
+                :onclick "hyprctl dispatch workspace ${workspace.id}"
+                (label
+                    :text {workspace.status == "active" ? active :
+                            workspace.status == "occupied" ? occupied :
+                                workspace.status == "empty" ? empty : "?"}
+                )
+            )
+        )
+    )
+)
+
+

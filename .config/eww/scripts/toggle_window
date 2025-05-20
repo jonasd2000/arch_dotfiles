@@ -1,0 +1,9 @@
+#!/bin/sh
+
+IS_MENU_OPEN="$(eww active-windows | awk '{print $2}' | grep "^$1$")"
+
+if [[ $IS_MENU_OPEN ]]; then
+    eww close "$1"
+else
+    eww open "$1"
+fi

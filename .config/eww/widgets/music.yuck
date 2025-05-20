@@ -1,0 +1,108 @@
+(defvar music_active_regex "Playing|Paused")
+(defvar music_players "spotify,spotifyd,spotify_player")
+
+(deflisten music_artist "scripts/music_info --artist")
+(deflisten music_title "scripts/music_info --title")
+(deflisten music_album "scripts/music_info --album")
+(deflisten music_ctime "scripts/music_info --ctime")
+(deflisten music_ttime "scripts/music_info --ttime")
+(deflisten music_ctime_raw "scripts/music_info --ctime_raw")
+(deflisten music_ttime_raw "scripts/music_info --ttime_raw")
+(deflisten music_coverpath "scripts/music_info --cover")
+(deflisten music_status "scripts/music_info --status")
+
+
+(defwidget music-info [?halign ?separator ?spacing ?auto-hide ?limit-width]
+    (box
+        :class "music-info ${music_status == 'Playing' ? 'music-playing' : ''}"
+        :halign {halign ?: "fill"}
+        :valign "center"
+        :space-evenly false
+        :spacing {spacing ?: 2}
+        :visible {(auto-hide ?: true) ? matches(music_status, music_active_regex) : true}
+        (label
+            :text "${music_title}"
+            :limit-width {limit-width ?: 200}
+        )
+        (label
+            :class "music-info-separator"
+            :text {separator ?: "-"}
+        )
+        (label
+            :text "${music_artist}"
+            :limit-width {limit-width ?: 200}
+        )
+    )
+)
+
+(defwidget music-controls [?space-evenly ?halign ?width ?height ?class]
+    (box
+        :class "music-controls ${class}"
+        :orientation "h"
+        :space-evenly {space-evenly ?: true}
+        :halign {halign ?: "fill"}
+        (button
+            :class "skip skip-prev"
+            :halign "fill"
+            :onclick "playerctl -p ${music_players} previous"
+            (image :icon "media-skip-backward-symbolic")
+        )
+        (button
+            :class "round playpause"
+            :halign "center"
+            :width width
+            :height height
+            :onclick "playerctl -p ${music_players} play-pause"
+            (image 
+                :icon {music_status == "Paused" ? 
+                 "media-playback-start-symbolic" :
+                 "media-playback-pause-symbolic"}
+            )
+        )
+        (button
+            :class "skip skip-next"
+            :halign "fill"
+            :onclick "playerctl -p ${music_players} next"
+            (image :icon "media-skip-forward-symbolic")
+        )
+    )
+)
+
+(defwidget music []
+    (box
+        :class "music"
+        :orientation "v"
+        :space-evenly false
+        :spacing 5
+        :visible {matches(music_status, music_active_regex)}
+        (box
+            :class "m_album_cover"
+            :height 250
+            :width 250
+            :halign "center"
+            :style "background-image: url('${music_coverpath}');"
+        ) 
+        (box
+            :orientation "h"
+            :space-evenly false
+            (box 
+                :orientation "v"
+                :hexpand true
+                (music-info)
+                (label 
+                    :text music_album
+                    :halign "start"
+                )
+            )
+            (label 
+                :text "${music_ctime} / ${music_ttime}"
+                :halign "end"
+            )
+        )
+        (progress :value {music_ctime_raw / music_ttime_raw * 100})
+        (music-controls
+            :width 50
+            :height 50
+        )
+    )
+)

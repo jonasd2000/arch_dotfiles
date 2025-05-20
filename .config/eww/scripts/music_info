@@ -1,0 +1,44 @@
+#!/bin/sh
+
+PLAYERS="spotify,spotifyd,spotify_player"
+PCTL_COMMAND="playerctl -F -p $PLAYERS"
+
+function get_album_cover () {
+    IMAGE_CACHE="$HOME/.cache/eww/image_cache"
+    if [ ! -d $IMAGE_CACHE ]; then
+        mkdir -p $IMAGE_CACHE
+    fi
+    $PCTL_COMMAND metadata --format "{{mpris:artUrl}}" | while read -r url; do
+        if [[ -z $url ]]; then
+            echo ""
+        else
+            FILENAME="${url:(-28)}" # assumes spotify url "i.scdn.co/long_string"
+            FILEPATH="$IMAGE_CACHE/$FILENAME"
+            if [ ! -f $FILEPATH ]; then
+                curl -s -o "$FILEPATH" "$url"
+            fi
+            echo "$FILEPATH"
+        fi
+    done
+}
+
+
+if [[ "$1" == "--artist" ]]; then
+    $PCTL_COMMAND metadata --format "{{artist}}"
+elif [[ "$1" == "--title"  ]]; then
+    $PCTL_COMMAND metadata --format "{{title}}"
+elif [[ "$1" == "--album" ]]; then
+    $PCTL_COMMAND metadata --format "{{album}}"
+elif [[ "$1" == "--cover" ]]; then
+    get_album_cover
+elif [[ "$1" == "--ttime_raw" ]]; then
+    $PCTL_COMMAND metadata --format "{{mpris:length}}"
+elif [[ "$1" == "--ttime" ]]; then
+    $PCTL_COMMAND metadata --format "{{duration(mpris:length)}}"
+elif [[ "$1" == "--ctime_raw" ]]; then
+    $PCTL_COMMAND metadata --format "{{position}}"
+elif [[ "$1" == "--ctime" ]]; then
+    $PCTL_COMMAND metadata --format "{{duration(position)}}"
+elif [[ "$1" == "--status" ]]; then
+    $PCTL_COMMAND metadata --format "{{status}}"
+fi
