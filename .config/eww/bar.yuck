@@ -34,8 +34,9 @@
         :class "sidestuff"
         :orientation "h"
         :space-evenly false
-        :spacing 5
+        :spacing 10
         :halign "end"
+        (weather_small)
         (bar_time)
         (button
             :onclick "scripts/toggle_window menu-closer && scripts/toggle_window menu"

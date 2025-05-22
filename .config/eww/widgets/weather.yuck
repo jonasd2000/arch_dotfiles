@@ -1,0 +1,28 @@
+(defpoll weather_status
+    :interval "600s"
+    "curl wttr.in/?format=j2"
+)
+(defpoll weather_symbol
+    :interval "600s"
+    "curl wttr.in/?format=%c"
+)
+(defpoll weather_png
+    :interval "600s"
+    "curl wttr.in/.png?0qpt --output /home/jonas/.cache/eww/image_cache/wttr.png"
+)
+
+(defwidget weather_small []
+    (box
+        (label
+            :text "${weather_symbol}${weather_status.current_condition[0].temp_C}°C"
+        )
+    )
+)
+
+(defwidget weather_img []
+    (box
+        :height 100
+        :width 200
+        :style "background-image: url('/home/jonas/.cache/eww/image_cache/wttr.png');"
+    )
+)

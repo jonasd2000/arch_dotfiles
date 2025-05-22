@@ -129,7 +129,11 @@
             :orientation "v"
             :space-evenly false
             (box "Hello There!")
-            (menu_time)
+            (box
+                :orientation "h"
+                (weather_img)
+                (menu_time)
+            )
         )
         (box
             :orientation "v"
