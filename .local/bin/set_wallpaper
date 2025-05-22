@@ -1,25 +1,53 @@
 #! /bin/sh
 
-path="$(readlink -f $1)"
+# default wallpaper path
+wallpaper_path="$HOME/.local/share/wallpapers/deer-wallpaper.png"
 
-if ! [ -f "$path" ]; then
-  echo "File $path does not exist"
+# load cached wallpaper path
+WPPATH_CACHE="$HOME/.cache/wallpaper_path"
+if [ -f "$WPPATH_CACHE" ]; then
+  cache_out="$(cat $WPPATH_CACHE)"
+  if [ -n "$cache_out" ]; then
+    wallpaper_path="$cache_out"
+  fi
+else
+  # if cache does not exist yet create it
+  touch "$WPPATH_CACHE"
+fi
+
+# if argument is supplied use argument path else use default/cached wallpaper path
+wallpaper_path="${1:-$wallpaper_path}"
+# resolve symlinks
+wallpaper_path="$(readlink -f $wallpaper_path)"
+
+# if path does not exist, exit
+if ! [ -f "$wallpaper_path" ]; then
+  echo "File $wallpaper_path does not exist"
   exit 0
 fi
 
 current_wallpaper="$(hyprctl hyprpaper listloaded)"
 
-res="$(hyprctl hyprpaper reload ,"$path")"
+# try loading the wallpaper
+res="$(hyprctl hyprpaper reload ,"$wallpaper_path")"
 
+# if hyprpaper was unable to load the wallpaper restore the current wallpaper
 if [ "$res" != "ok" ]; then
-  echo "Unable to load file $path"
+  echo "Unable to load file $wallpaper_path"
   hyprctl dispatch exec hyprpaper --quiet
   hyprctl hyprpaper reload ,"$current_wallpaper" --quiet
   exit 0
 fi
 
-wallust run "$path" --quiet
+# write path to cache
+echo $wallpaper_path > $WPPATH_CACHE
+echo "\$wallpaper = $wallpaper_path" > "$HOME/.config/hypr/wallpaper.conf"
+
+# generate color scheme for wallpaper
+wallust run "$wallpaper_path" --quiet
+
+# apply colorscheme to eww
 eww reload
 
-echo "Wallpaper set to $path"
+echo "Wallpaper set to $wallpaper_path"
 
