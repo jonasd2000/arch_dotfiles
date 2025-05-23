@@ -2,4 +2,4 @@ functions/tide
 functions/_*
 
 
-./fish_variables
+fish_variables
