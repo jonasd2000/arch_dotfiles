@@ -1,0 +1,5 @@
+functions/tide
+functions/_*
+
+
+./fish_variables
