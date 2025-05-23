@@ -1,53 +1,84 @@
 #! /bin/sh
 
+
+log ()
+{
+  current_log_message="$1"
+  new_log_message="$2"
+  current_log_message+=$'\n'"$(date): $new_log_message"
+
+  echo "$current_log_message"
+}
+
+LOGS_PATH="$HOME/.cache/set_wallpaper_logs"
+LOGS="$(date)"
+touch "$LOGS_PATH"
+
 # default wallpaper path
 wallpaper_path="$HOME/.local/share/wallpapers/deer-wallpaper.png"
+LOGS="$(log "$LOGS" "default: $wallpaper_path")"
+
 
 # load cached wallpaper path
 WPPATH_CACHE="$HOME/.cache/wallpaper_path"
 if [ -f "$WPPATH_CACHE" ]; then
+  LOGS="$(log "$LOGS" "cache exists: $WPPATH_CACHE")"
   cache_out="$(cat $WPPATH_CACHE)"
   if [ -n "$cache_out" ]; then
+    LOGS="$(log "$LOGS" "cache read: $cache_out")"
     wallpaper_path="$cache_out"
   fi
 else
   # if cache does not exist yet create it
+  LOGS="$(log "$LOGS" "cache created: $WPPATH_CACHE")"
   touch "$WPPATH_CACHE"
 fi
 
 # if argument is supplied use argument path else use default/cached wallpaper path
 wallpaper_path="${1:-$wallpaper_path}"
+LOGS="$(log "$LOGS" "path after arg read: $wallpaper_path")"
 # resolve symlinks
 wallpaper_path="$(readlink -f $wallpaper_path)"
+LOGS="$(log "$LOGS" "resolved path: $wallpaper_path")"
 
 # if path does not exist, exit
 if ! [ -f "$wallpaper_path" ]; then
   echo "File $wallpaper_path does not exist"
+  LOGS="$(log "$LOGS" "exited because path $wallpaper_path does not exist")"
+  echo "$LOGS" > $LOGS_PATH
   exit 0
 fi
 
 current_wallpaper="$(hyprctl hyprpaper listloaded)"
 
 # try loading the wallpaper
+LOGS="$(log "$LOGS" "trying to load wallpaper")"
 res="$(hyprctl hyprpaper reload ,"$wallpaper_path")"
 
 # if hyprpaper was unable to load the wallpaper restore the current wallpaper
 if [ "$res" != "ok" ]; then
+  LOGS="$(log "$LOGS" "hyprpaper was unable to load wallpaper: $res")"
   echo "Unable to load file $wallpaper_path"
   hyprctl dispatch exec hyprpaper --quiet
   hyprctl hyprpaper reload ,"$current_wallpaper" --quiet
+  echo "$LOGS" > $LOGS_PATH
   exit 0
 fi
+LOGS="$(log "$LOGS" "wallpaper successfully loaded")"
 
 # write path to cache
 echo $wallpaper_path > $WPPATH_CACHE
 echo "\$wallpaper = $wallpaper_path" > "$HOME/.config/hypr/wallpaper.conf"
+LOGS="$(log "$LOGS" "path $wallpaper_path written to cache and hypr config")"
 
 # generate color scheme for wallpaper
 wallust run "$wallpaper_path" --quiet
+LOGS="$(log "$LOGS" "wallust color scheme created")"
 
 # apply colorscheme to eww
 eww reload
+LOGS="$(log "$LOGS" "eww reloaded")"
+LOGS="$(log "$LOGS" "wallpaper successfully set")"
+echo "$LOGS" > $LOGS_PATH
 
 echo "Wallpaper set to $wallpaper_path"
-
