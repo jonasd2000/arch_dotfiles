@@ -1,6 +1,6 @@
 @define-color background rgb({{background | rgb}});
 @define-color foreground rgb({{foreground | rgb}});
 @define-color highlight rgb({{color4 | rgb}});
-@define-color lowlight rgb({{color1 | rgb}});
-@define-color accent rgb({{color14 | rgb}});
+@define-color lowlight rgb({{color0 | rgb}});
+@define-color accent rgb({{color10 | rgb}});
 @define-color alert rgb(245, 43, 10);
