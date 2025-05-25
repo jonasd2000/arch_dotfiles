@@ -1,1 +1,1 @@
-$HOME/.config/eww/scripts/toggle_window menu-closer && $HOME/.config/eww/scripts/toggle_window menu
+eww open menu-closer --toggle && eww open menu --toggle
