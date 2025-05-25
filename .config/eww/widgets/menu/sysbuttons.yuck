@@ -63,7 +63,8 @@
         (label :text updates)
         (overlay :hexpand true 
                  (sysbutton
-                         :onclick "hyprctl dispatch exec 'kitty yay'"
+                         :onclick "toggle_menu && hyprctl dispatch exec 'kitty yay'"
+                         :timeout "500ms"
                          (image :icon "object-rotate-right-symbolic"
                                 :icon-size "large-toolbar")
                  )
