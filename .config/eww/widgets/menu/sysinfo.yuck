@@ -1,0 +1,42 @@
+(defwidget sysinfoitem [symbol value]
+    (overlay
+        :class "sysinfoitem"
+        (circular-progress
+            :class "sysinfo-progress"
+            :value value
+            :start-at 25
+            :thickness 10
+            :rounded true
+        )
+        (label
+            :class "sysinfo-symbol"
+            :text symbol
+            :justify "center"
+            :xalign 0.48
+        )
+        (label ;; value text
+            :class "sysinfo-value"
+            :text "${round(value, 1)}%"
+            :xalign 0.52
+            :yalign 0.8
+        )
+    )
+)
+
+(defwidget sysinfo []
+    (box
+        :orientation "h"
+        (sysinfoitem ;; cpu
+            :symbol ""
+            :value {EWW_CPU.avg}
+        )
+        (sysinfoitem ;; ram
+            :symbol ""
+            :value {EWW_RAM.used_mem_perc}
+        )
+        (sysinfoitem ;; disk
+            :symbol ""
+            :value {EWW_DISK["/"].used_perc}
+        )
+    )
+)

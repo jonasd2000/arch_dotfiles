@@ -19,10 +19,74 @@
     )
 )
 
-(defwidget weather_img []
+(defwidget weather_condition [value]
     (box
-        :height 100
-        :width 200
-        :style "background-image: url('/home/jonas/.cache/eww/image_cache/wttr.png');"
+        :orientation "h"
+        :space-evenly false
+        :class "weather-condition"
+        (box ;; symbol
+            :class "weather-condition-symbol"
+            :width 50
+            (children :nth 0)
+        )
+        (label ;; value
+            :class "weather-condition-value"
+            :text value
+        )
+    )
+)
+
+(defwidget weather_large []
+    (box
+        :orientation "v"
+        :space-evenly false
+        (label ;; location
+            :height 30
+            :text "${weather_status.nearest_area[0].areaName[0].value}, ${weather_status.nearest_area[0].country[0].value}"
+        )
+        (box
+            :vexpand true
+            :orientation "h"
+            (box
+                :orientation "v"
+                (label
+                    :text "${weather_status.current_condition[0].weatherDesc[0].value}"
+                )
+                (transform
+                    :translate-x "40px"
+                (label ;; weather symbol
+                    :class "weather-large-symbol"
+                    :text {weather_symbol}
+                    :show-truncated false
+                )
+                )
+            )
+            (box
+                :orientation "v"
+                (weather_condition ;; temperature
+                    :value "${weather_status.current_condition[0].temp_C}°C"
+                    (label :text "󰔏")
+                )
+                (weather_condition ;; humidity
+                    :value "${weather_status.current_condition[0].humidity}%"
+                    (label :text "")
+                )
+                (weather_condition ;; precipation
+                    :value "${weather_status.current_condition[0].precipMM}mm"
+                    (label :text "")
+                )
+                (weather_condition ;;wind
+                    :value "${weather_status.current_condition[0].windspeedKmph} km/h"
+                    (label
+                        :text ""
+                        :angle {360 - weather_status.current_condition[0].winddirDegree}
+                    )
+                )
+                (weather_condition ;; UV index
+                    :value "${weather_status.current_condition[0].uvIndex}"
+                    (label :text "󰓠")
+                )
+            )
+        )
     )
 )

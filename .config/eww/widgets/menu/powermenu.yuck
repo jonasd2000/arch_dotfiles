@@ -1,0 +1,70 @@
+(defvar powermenu-hover false)
+(defwidget powermenu []
+    (reveal-on-hover
+        :ishovered powermenu-hover
+        :hovered-varname "powermenu-hover"
+        :transition "fade"
+        (image
+            :icon "system-shutdown-symbolic"
+            :icon-size "dialog"
+        )
+        (box
+            :orientation "h"
+            (box
+                :orientation "v"
+                (button ;; lock
+                  :onclick "toggle_menu && hyprctl dispatch exec hyprlock"
+                  :timeout "1s"
+                  :tooltip "Lock Screen"
+                  (image
+                      :icon "system-lock-screen-symbolic"
+                      :icon-size "large-toolbar"
+                  )
+                )
+                (button ;; logout
+                    :onclick "hyprctl dispatch exit"
+                    :timeout "1s"
+                    :tooltip "Log Out"
+                    (image
+                        :icon "system-log-out-symbolic"
+                        :icon-size "large-toolbar"
+                    )
+                )
+            )
+            (box
+                (button ;; poweroff
+                    :onclick "systemctl poweroff"
+                    :timeout "1s"
+                    :tooltip "Power Off"
+                    (image
+                        :icon "system-shutdown-symbolic"
+                        :icon-size "dialog"
+                    )
+                )
+            )
+            (box
+                :orientation "v"
+                (button ;; hibernate
+                    :onclick "systemctl hibernate"
+                    :timeout "1s"
+                    :tooltip "Hibernate"
+                    (image
+                        :icon "radio-mixed-symbolic"
+                        :icon-size "large-toolbar"
+                    )
+                )
+                (button ;; reboot
+                    :onclick "systemctl reboot"
+                    :timeout "1s"
+                    :tooltip "Reboot System"
+                    (image
+                        :icon "system-reboot-symbolic"
+                        :icon-size "large-toolbar"
+                    )
+                )
+            )
+        )
+    )
+)
+
+

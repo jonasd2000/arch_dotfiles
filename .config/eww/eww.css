@@ -1,7 +1,8 @@
 @import "../colors/colors-gtk3.css";
 
+
 * {
-    font-family: AdwaitaSans;
+    font-family: "AdwaitaSans","BigBlueTerm437 Nerd Font";
 }
 
 /* Global Styles */
@@ -27,6 +28,11 @@
     border-radius: 5px;
 }
 
+.menu-item {
+    margin: 5px;
+    padding: 5px;
+}
+
 .bar button {
     color: inherit;
     box-shadow: none;
@@ -41,11 +47,12 @@
     background: transparent;
     border: none;
     border-radius: 8px;
+    box-shadow: none;
     margin: 2px;
-    transition: border 0.3s ease-out;
+    transition: background 0.1s ease-out;
 }
 .menu button:hover {
-    border: 2px @highlight solid;
+    background: alpha(@lowlight, 0.8);
 }
 
 .menu-closer {
@@ -81,29 +88,41 @@
     animation: glow 1.6s ease-in-out infinite alternate; 
 }
 
-.sidestuff slider {
-    all: unset;
+/* MENU STYLING */
+.menu-dow {
+    font-weight: bold;
+    font-size: 4em;
+}
+.menu-date {
+    font-size: 3em;
+}
+.menu-time {
+    font-size: 3em;
 }
 
-
-.metric scale trough highlight {
-    all: unset;
-    background-color: @highlight;
-    border-radius: 0px;
+.sysinfo {
+    padding: 15px;
 }
-
-.metric scale trough {
-    all: unset;
+.sysinfo-progress {
+    color: @highlight;
     background-color: @lowlight;
-    border-radius: 0px;
-    min-height: 3px;
-    min-width: 50px;
-    margin-left: 5px;
-    margin-right: 20px;
+}
+.sysinfo-symbol {
+    font-size: 2em;
+    font-weight: bold;
+}
+.sysinfo-value {
+    font-weight: bold;
 }
 
-.menuwidget {
-    padding: 10px;
+.weather-condition {
+    font-size: 14px;
+}
+.weather-condition-symbol {
+    font-size: 1.3em;
+}
+.weather-large-symbol {
+    font-size: 300%;
 }
 
 .updatealert {
@@ -111,10 +130,35 @@
     font-size: 0.8em;
 }
 
-.m_album_cover {
-    border-radius: 10px;
-    background-size: contain;
+.music {
+    padding: 0px;
 }
+
+.m_album_cover {
+    border-radius: 5px;
+    background-size: cover;
+    opacity: 0.1;
+}
+.m_music_else {
+    padding: 5px;
+}
+
+.music-progress, scale trough {
+    all: unset;
+    background-color: @lowlight;
+    min-height: 5px;
+    border: none;
+    border-radius: 5px;
+}
+.music-progress, scale trough highlight {
+    all: unset;
+    background-color: @highlight;
+    border-radius: 5px;
+}
+.music-progress, scale slider {
+    all: unset;
+}
+
 .skip {
     background: transparent;
     border: none;

@@ -14,7 +14,7 @@
 
 (defwidget music-info [?halign ?separator ?spacing ?auto-hide ?limit-width]
     (box
-        :class "music-info ${music_status == 'Playing' ? 'music-playing' : ''}"
+        :class "music-text music-info ${music_status == 'Playing' ? 'music-playing' : ''}"
         :halign {halign ?: "fill"}
         :valign "center"
         :space-evenly false
@@ -43,7 +43,8 @@
         :halign {halign ?: "fill"}
         (button
             :class "skip skip-prev"
-            :halign "fill"
+            :width width
+            :height height
             :onclick "playerctl -p ${music_players} previous"
             (image :icon "media-skip-backward-symbolic")
         )
@@ -61,7 +62,8 @@
         )
         (button
             :class "skip skip-next"
-            :halign "fill"
+            :width width
+            :height height
             :onclick "playerctl -p ${music_players} next"
             (image :icon "media-skip-forward-symbolic")
         )
@@ -71,38 +73,45 @@
 (defwidget music []
     (box
         :class "music"
-        :orientation "v"
-        :space-evenly false
-        :spacing 5
         :visible {matches(music_status, music_active_regex)}
-        (box
-            :class "m_album_cover"
-            :height 250
-            :width 250
-            :halign "center"
-            :style "background-image: url('${music_coverpath}');"
-        ) 
-        (box
-            :orientation "h"
-            :space-evenly false
-            (box 
+        (overlay
+            (box
+                :class "m_album_cover"
+                :style "background-image: url('${music_coverpath}');"
+            )
+            (box
                 :orientation "v"
-                :hexpand true
-                (music-info)
-                (label 
-                    :text music_album
-                    :halign "start"
+                :space-evenly false
+                :class "m_music_else"
+                :valign "end"
+                (box
+                    :orientation "h"
+                    :space-evenly false
+                    (box 
+                        :orientation "v"
+                        :hexpand true
+                        (music-info)
+                        (label
+                            :class "music-text"
+                            :text music_album
+                            :halign "start"
+                        )
+                    )
+                    (label 
+                        :class "music-text"
+                        :text "${music_ctime} / ${music_ttime}"
+                        :halign "end"
+                        :valign "end"
+                    )
                 )
+                (scale
+                    :class "music-progress"
+                    :value {music_ctime_raw}
+                    :max {music_ttime_raw}
+                    :onchange "scripts/set_player_position {} ${music_players}"
+                )
+                (music-controls)
             )
-            (label 
-                :text "${music_ctime} / ${music_ttime}"
-                :halign "end"
-            )
-        )
-        (progress :value {music_ctime_raw / music_ttime_raw * 100})
-        (music-controls
-            :width 50
-            :height 50
         )
     )
 )

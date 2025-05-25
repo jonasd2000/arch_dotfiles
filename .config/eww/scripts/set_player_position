@@ -1,0 +1,21 @@
+#! /bin/sh
+
+default_players="spotify,spotifyd,spotify_player" 
+players=${2:-$default_players}
+
+set_position="$1"
+current_position="$(eww get music_ctime_raw)"
+
+difference=$((($set_position - $current_position) / 1000000))
+
+if [[ $difference -lt 0 ]]; then
+  suffix="-"
+  difference=$((0 - $difference))
+else
+  suffix="+"
+fi
+
+offset="$difference$suffix"
+
+playerctl -p "$players" position $offset
+
