@@ -51,6 +51,7 @@
                 :orientation "v"
                 (label
                     :text "${weather_status.current_condition[0].weatherDesc[0].value}"
+                    :limit-width 1
                 )
                 (transform
                     :translate-x "40px"

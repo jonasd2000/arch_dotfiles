@@ -70,6 +70,7 @@
     )
 )
 
+(defvar music-progress-locked true)
 (defwidget music []
     (box
         :class "music"
@@ -79,6 +80,10 @@
                 :class "m_album_cover"
                 :style "background-image: url('${music_coverpath}');"
             )
+            (eventbox ;; locks the music progress scale widget
+                      ;; which sometimes sets the song progress to 0 when loading
+                :onhover "eww update music-progress-locked=false"
+                :onhoverlost "eww update music-progress-locked=true"
             (box
                 :orientation "v"
                 :space-evenly false
@@ -108,9 +113,10 @@
                     :class "music-progress"
                     :value {music_ctime_raw}
                     :max {music_ttime_raw}
-                    :onchange "scripts/set_player_position {} ${music_players}"
+                    :onchange "scripts/set_player_position {} ${music_players} ${music-progress-locked}"
                 )
                 (music-controls)
+            )
             )
         )
     )

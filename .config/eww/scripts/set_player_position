@@ -1,5 +1,12 @@
 #! /bin/sh
 
+locked="$3"
+
+if [ "$locked" == "true" ]; then
+    echo "no"
+    exit 0
+fi
+
 default_players="spotify,spotifyd,spotify_player" 
 players=${2:-$default_players}
 
