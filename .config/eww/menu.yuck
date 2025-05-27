@@ -90,7 +90,7 @@
     :monitor 0
     :namespace "ewwmenucloser"
     :geometry (geometry :width "100%" :height "100%")
-    :stacking "fg"
+    :stacking "overlay"
     :focusable false
     :exclusive true
     (closer :window "menu")
@@ -98,7 +98,7 @@
 
 (defwindow menu
     :monitor 0
-    :stacking "fg"
+    :stacking "overlay"
     :namespace "ewwmenu"
     :geometry (geometry
         :x "0%"
