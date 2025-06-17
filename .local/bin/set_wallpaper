@@ -78,6 +78,11 @@ LOGS="$(log "$LOGS" "wallust color scheme created")"
 # apply colorscheme to eww
 eww reload
 LOGS="$(log "$LOGS" "eww reloaded")"
+
+# apply colorscheme to mako
+makoctl reload
+LOGS="$(log "$LOGS" "mako reloaded")"
+
 LOGS="$(log "$LOGS" "wallpaper successfully set")"
 echo "$LOGS" > $LOGS_PATH
 

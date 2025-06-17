@@ -47,3 +47,4 @@ palette = "dark16"
 hypr = { template = 'hypr', target = '~/.config/hypr/colors.conf' }
 gtk3 = { template = 'gtk3', target = '~/.config/colors/colors-gtk3.css' }
 kitty = { template = 'kitty', target = '~/.config/kitty/current-theme.conf' }
+mako = { template = 'mako', target = '~/.config/mako/config' }

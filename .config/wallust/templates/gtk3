@@ -3,4 +3,4 @@
 @define-color highlight rgb({{color4 | rgb}});
 @define-color lowlight rgb({{color0 | rgb}});
 @define-color accent rgb({{color10 | rgb}});
-@define-color alert rgb(245, 43, 10);
+@define-color alert rgb({{color0 | blend("ff0000") | rgb}});
