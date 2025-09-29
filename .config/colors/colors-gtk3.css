@@ -1,6 +1,6 @@
-@define-color background rgb(2,0,0);
-@define-color foreground rgb(249,245,231);
-@define-color highlight rgb(98,124,114);
-@define-color lowlight rgb(26,24,23);
-@define-color accent rgb(70,134,135);
-@define-color alert rgb(140,12,12);
+@define-color background rgb(7,0,18);
+@define-color foreground rgb(174,166,187);
+@define-color highlight rgb(74,125,181);
+@define-color lowlight rgb(49,70,72);
+@define-color accent rgb(82,83,177);
+@define-color alert rgb(152,35,36);
