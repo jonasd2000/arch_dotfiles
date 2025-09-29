@@ -2,29 +2,37 @@
 (include "widgets/menu/sysbuttons.yuck")
 (include "widgets/menu/sysinfo.yuck")
 
+(defvar menucalendar-hover false)
 (defwidget menu_datetime []
-    (box
-        :orientation "v"
-        (overlay
-        (label ;; Day of Week
-            :class "menu-dow"
-            :text {formattime(EWW_TIME, "%A")}
-            :xalign 0.1
-            :yalign 0.1
+    (reveal-on-hover
+        :ishovered menucalendar-hover
+        :hovered-varname "menucalendar-hover"
+        :transition "slideright"
+        :duration "2000ms"
+        (box
+            :orientation "v"
+            (overlay
+            (label ;; Day of Week
+                :class "menu-dow"
+                :text {formattime(EWW_TIME, "%A")}
+                :xalign 0.1
+                :yalign 0.1
+            )
+            (label ;; Date
+                :class "menu-date"
+                :text {formattime(EWW_TIME, "%e %B %Y")}
+                :justify "right"
+                :xalign 0.9
+                :yalign 0.6
+            )
+            )
+            (label ;; Time
+                :class "menu-time"
+                :text {formattime(EWW_TIME, "%T")}
+            )
         )
-        (label ;; Date
-            :class "menu-date"
-            :text {formattime(EWW_TIME, "%e %B %Y")}
-            :justify "right"
-            :xalign 0.9
-            :yalign 0.6
-        )
-        )
-        (label ;; Time
-            :class "menu-time"
-            :text {formattime(EWW_TIME, "%T")}
-        )
-   )
+        (calendar)
+    )
 )
 
 
