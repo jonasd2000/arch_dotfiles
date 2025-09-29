@@ -2,6 +2,7 @@ set -gx EDITOR nvim
 set fish_greeting
 
 fish_add_path ".local/bin/"
+fish_add_path ".cargo/bin"
 
 abbr --add py python3
 abbr --add spt spotify_player
