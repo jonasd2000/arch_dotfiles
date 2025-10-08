@@ -42,15 +42,14 @@
         :space-evenly {space-evenly ?: true}
         :halign {halign ?: "fill"}
         (button
-            :class "skip skip-prev"
+            :class "mcontrol-button skip skip-prev"
             :width width
             :height height
             :onclick "playerctl -p ${music_players} previous"
             (image :icon "media-skip-backward-symbolic")
         )
         (button
-            :class "round playpause"
-            :halign "center"
+            :class "mcontrol-button playpause"
             :width width
             :height height
             :onclick "playerctl -p ${music_players} play-pause"
@@ -61,7 +60,7 @@
             )
         )
         (button
-            :class "skip skip-next"
+            :class "mcontrol-button skip skip-next"
             :width width
             :height height
             :onclick "playerctl -p ${music_players} next"
@@ -80,6 +79,37 @@
                 :class "m_album_cover"
                 :style "background-image: url('${music_coverpath}');"
             )
+            (box
+                :class "music-info"
+                :valign "start"
+                :halign "fill"
+                :space-evenly false
+                :orientation "vertical"
+                :spacing 0
+                (box
+                    :space-evenly false
+                    (label
+                        :class "music-info-artist"
+                        :text "${music_artist}"
+                        :halign "start"
+                        :hexpand true
+                    )
+                    (label
+                        :class "music-info-album"
+                        :text "${music_album}"
+                        :halign "end"
+                    )
+                )
+                (label
+                        :class "music-info-title"
+                        :text "${music_title}"
+                        :justify "center"
+                        :limit-width 15
+                        :wrap true
+                        :lines 3
+                        :wrap-mode "word"
+                )
+            )
             (eventbox ;; locks the music progress scale widget
                       ;; which sometimes sets the song progress to 0 when loading
                 :onhover "eww update music-progress-locked=false"
@@ -92,16 +122,6 @@
                 (box
                     :orientation "h"
                     :space-evenly false
-                    (box 
-                        :orientation "v"
-                        :hexpand true
-                        (music-info)
-                        (label
-                            :class "music-text"
-                            :text music_album
-                            :halign "start"
-                        )
-                    )
                     (label 
                         :class "music-text"
                         :text "${music_ctime} / ${music_ttime}"
@@ -115,7 +135,9 @@
                     :max {music_ttime_raw}
                     :onchange "scripts/set_player_position {} ${music_players} ${music-progress-locked}"
                 )
-                (music-controls)
+                (music-controls
+                    :height 40
+                )
             )
             )
         )

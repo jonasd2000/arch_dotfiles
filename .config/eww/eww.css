@@ -134,6 +134,18 @@
     padding: 0px;
 }
 
+.music-info-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    padding: 5px;
+}
+.music-info-artist {
+    font-size: 1.5em;
+}
+.music-info-album {
+    font-style: italic;
+}
+
 .m_album_cover {
     border-radius: 5px;
     background-size: cover;
@@ -159,12 +171,12 @@
     all: unset;
 }
 
-.skip {
+.mcontrol-button {
     background: transparent;
     border: none;
     box-shadow: none;
 }
-.skip:hover {
+.mcontrol-button:hover {
     border: none;
     color: @accent;
 }
