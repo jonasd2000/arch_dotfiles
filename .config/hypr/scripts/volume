@@ -21,7 +21,7 @@ toggle_mute () {
 }
 
 send_notification () {
-    notify-send "$(get_volume)%" -h string:x-canonical-private-synchronous:volume-notification --app-name "Volume" --urgency low
+    notify-send "$(get_volume)%" -h string:x-canonical-private-synchronous:volume-notification -h int:value:"$(get_volume)" --app-name "Volume" --urgency low
 }
 
 if [[ "$1" == "--increase" ]]; then
