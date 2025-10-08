@@ -8,5 +8,5 @@ volume="$(wpctl get-volume $sink | awk '{print $2}')"
 volume_perc="$(echo "scale=0; $volume * 100" | bc)"
 muted="$(wpctl get-volume $sink | awk '{print $3}')"
 
-notify-send "${volume_perc}% $muted" --app-name "Volume" --urgency low
+notify-send "${volume_perc}% $muted" -h string:x-canonical-private-synchronous:volume-notification --app-name "Volume" --urgency low
 

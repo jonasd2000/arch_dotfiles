@@ -7,5 +7,5 @@ max_brightness="$(brightnessctl m)"
 
 current_brightness_perc="$(echo "scale=0; 100 * $current_brightness / $max_brightness" | bc)"
 
-notify-send "${current_brightness_perc}%" --app-name "Brightness" --urgency low
+notify-send "${current_brightness_perc}%" -h string:x-canonical-private-synchronous:brightness-notification --app-name "Brightness" --urgency low
 
