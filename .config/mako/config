@@ -10,14 +10,14 @@ sort=-time
 output=DP-2
 layer=overlay
 anchor=top-right
-background-color=#070012
-text-color=#AEA6BB
+background-color=#2A2825
+text-color=#BBB4B4
 width=300
 height=100
 margin=5
 padding=0,5,10
 border-size=2
-border-color=#314648
+border-color=#4A4235
 border-radius=10
 icons=1
 max-icon-size=64
@@ -25,11 +25,11 @@ default-timeout=5000
 ignore-timeout=1
 
 [urgency=normal]
-border-color=#4A7DB5
+border-color=#B95D56
 
 [urgency=high]
-border-color=#AEA6BB
-background-color=#982324
+border-color=#BBB4B4
+background-color=#A4211B
 default-timeout=0
 
 [mode=do-not-disturb]
