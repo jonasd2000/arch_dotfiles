@@ -1,12 +1,35 @@
-action="$1"
-sink="$2"
-value="$3"
+get_volume () {
+    volume="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2}')"
+    volume_perc="$(echo "scale=0; $volume * 100" | bc)"
+    echo "$volume_perc"
+}
 
-wpctl "$action" "$sink" "$value"
+is_muted () {
+    echo "$(wpctl get-volume $sink | awk '{print $3}')"
 
-volume="$(wpctl get-volume $sink | awk '{print $2}')"
-volume_perc="$(echo "scale=0; $volume * 100" | bc)"
-muted="$(wpctl get-volume $sink | awk '{print $3}')"
+}
 
-notify-send "${volume_perc}% $muted" -h string:x-canonical-private-synchronous:volume-notification --app-name "Volume" --urgency low
+increase_volume () {
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ && send_notification
+}
+decrease_volume () {
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && send_notification
+}
 
+toggle_mute () {
+    wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+}
+
+send_notification () {
+    notify-send "$(get_volume)%" -h string:x-canonical-private-synchronous:volume-notification --app-name "Volume" --urgency low
+}
+
+if [[ "$1" == "--increase" ]]; then
+    increase_volume
+elif [[ "$1" == "--decrease" ]]; then
+    decrease_volume
+elif [[ "$1" == "--mute" ]]; then
+    toggle_mute
+else
+    echo "$(get_volume)"
+fi
