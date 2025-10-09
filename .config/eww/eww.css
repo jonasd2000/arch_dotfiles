@@ -181,6 +181,41 @@
     color: @accent;
 }
 
+/* general calendar */
+.menu calendar {
+    background: transparent;
+    border: none;
+    color: @foreground;
+    padding: 5px;
+}
+/* calendar header (month, year)*/
+.menu calendar .header {
+    border-bottom: 1px solid @highlight;
+    color: @highlight;
+}
+/* calendar header buttons (to switch month & year)*/
+.menu calendar .button {
+    color: @lowlight;
+}
+.menu calendar .button:hover {
+    color: @highlight;
+}
+
+/* calendar day names */
+.menu calendar.highlight {
+    color: @highlight;
+}
+/* calendar selected day */
+.menu calendar:selected {
+    border-radius: 4px;
+    background-color: @highlight;
+    color: @background;
+}
+/* days of prev/next month */
+.menu calendar:indeterminate {
+    color: @lowlight;
+}
+
 .round {
     border-radius: 50%;
 }
