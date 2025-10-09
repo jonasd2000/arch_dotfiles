@@ -1,0 +1,20 @@
+#! /bin/sh
+
+active_window_json="$(hyprctl -j activewindow)"
+active_window_address="address:$(jq -r ".address" <<< "$active_window_json")"
+active_window_pinned="$(jq -r ".pinned" <<< "$active_window_json")"
+
+if [[ "$active_window_pinned" == "false" ]]; then # if we are pinning the window
+    hyprctl dispatch setfloating "$active_window_address"
+    # resize and move window
+    hyprctl dispatch resizewindowpixel exact 408 230, "$active_window_address"
+    hyprctl dispatch movewindowpixel exact 956 35, "$active_window_address"
+
+    # turn dimming off
+    hyprctl dispatch setprop "$active_window_address" nodim on 
+    
+    hyprctl dispatch pin "$active_window_address"
+else # if we are unpinning the window
+    hyprctl dispatch setprop "$active_window_address" nodim off
+    hyprctl dispatch settiled "$active_window_address"
+fi
