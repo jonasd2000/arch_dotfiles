@@ -46,5 +46,6 @@ check_contrast = true
 # zathura = { template = 'zathura', target = '~/.config/zathura/zathurarc' }
 hypr = { template = 'hypr', target = '~/.config/hypr/colors.conf' }
 gtk3 = { template = 'gtk3', target = '~/.config/colors/colors-gtk3.css' }
+gtk3_theme = { template = 'gtk.css', target = '~/.local/share/themes/Custom-GTK-Theme/gtk-3.0/gtk.css' }
 kitty = { template = 'kitty', target = '~/.config/kitty/current-theme.conf' }
 mako = { template = 'mako', target = '~/.config/mako/config' }
